@@ -11,7 +11,8 @@ public class BoardVO {
 	private String content;    //내용
 	private String updateD;    //작성일
 	
-	private int rowN;    //게시글 순번
+	
+	private int rowN;    //게시글 순번        DB에 없는 변수임
 	private int boardSEQ;   // 시퀀스값
 	
 	

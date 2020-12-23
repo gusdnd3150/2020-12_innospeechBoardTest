@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -72,20 +73,18 @@ public class MainController{
 		
 		// 게시글 인설트
 		@RequestMapping(value = "/insertBoard.do", method = RequestMethod.POST)
-		public ModelAndView writeBoard(BoardVO vo,HttpServletRequest request,HttpServletResponse response) {
-			ModelAndView mav= new ModelAndView();
-			//System.out.print("넘어온 값: "+vo.getContent());
-			 
+		@ResponseBody
+		public String writeBoard(BoardVO vo,HttpServletRequest request,HttpServletResponse response) {
+			String result= "";
 		    try {
 		    	vo.setBoardSEQ(services.boardtotal()+1); 
 		    	services.insertBoard(vo);
-				
+		    	result= "success";
 			} catch (Exception e) {
 				e.printStackTrace();
+				result="false";
 			}
-			
-			mav.setViewName("board");
-			return mav;
+			return result;
 		}
 		
 		
