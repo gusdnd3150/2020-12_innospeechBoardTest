@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="testBoard">
+
+	<resultMap id="boardVo" type="boardVo">
+		<result property="boardNum" column="BOARDNUM" />
+		<result property="writer" column="WRITER" />
+		<result property="title" column="TITLE" />
+		<result property="content" column="CONTENT" />
+		<result property="updateD" column="UPDATED" />
+		<result property="rowN" column="ROWN" />
+		<result property="boardSEQ" column="" />
+	</resultMap>
+	
+	<resultMap id="pagingVO" type="pagingVO">
+		<result property="start" column="" />
+		<result property="end" column=""  />
+		<result property="nowPage"  column="" />
+		<result property="startPage"  column="" />
+		<result property="endPage"  column="" />
+		<result property="total"  column="" />
+		<result property="cntPerPage"  column="" />
+		<result property="lastPage"  column="" />
+		<result property="cntPage" column=""  />
+	</resultMap>
+	<select id="count" resultType="int">
+		SELECT COUNT(*) FROM boards
+	</select>
+
+
+	<select id="list" resultType="boardVO" parameterType="pagingVO">
+         SELECT *
+          FROM (
+                 SELECT
+                 (@rownum:=@rownum+1)AS rowN, b.*
+                        from              ( SELECT * 
+					                    	FROM BOARDs
+						                    ORDER BY boardNum DESC ) b
+						                               ,(SELECT @ROWNUM := 0 ) c) d
+           WHERE rowN BETWEEN  #{start} AND #{end}
+	</select>
+	
+	<insert id="insertBoard" parameterType="boardVo" >
+	   INSERT INTO boards(boardNum,writer,title,content,updateD) 
+	   VALUES(#{boardSEQ},#{writer},#{title},#{content},DEFAULT );
+	</insert>
+
+</mapper>
