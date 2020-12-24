@@ -7,6 +7,9 @@ public class PagingVO {
 	private int nowPage, startPage, endPage, total, cntPerPage, lastPage, start, end;
 	private int cntPage = 5;
 	
+	private String searchType;   //검색 조건
+	private String searchContent;
+	
 	public PagingVO() {
 	}
 	public PagingVO(int total, int nowPage, int cntPerPage) {
@@ -16,6 +19,18 @@ public class PagingVO {
 		calcLastPage(getTotal(), getCntPerPage());
 		calcStartEndPage(getNowPage(), cntPage);
 		calcStartEnd(getNowPage(), getCntPerPage());
+	}
+	
+	public PagingVO(int total, int nowPage, int cntPerPage,String searchType,String searchContent) {
+		setNowPage(nowPage);
+		setCntPerPage(cntPerPage);
+		setTotal(total);
+		calcLastPage(getTotal(), getCntPerPage());
+		calcStartEndPage(getNowPage(), cntPage);
+		calcStartEnd(getNowPage(), getCntPerPage());
+		this.searchType = searchType;
+		this.searchContent= searchContent;
+		
 	}
 	
 	// 제일 마지막 페이지 계산
@@ -29,6 +44,7 @@ public class PagingVO {
 	public void setCntPage(int cntPage) {
 		this.cntPage = cntPage;
 	}
+
 	// 시작, 끝 페이지 계산
 	public void calcStartEndPage(int nowPage, int cntPage) {
 		setEndPage(((int)Math.ceil((double)nowPage / (double)cntPage)) * cntPage);
@@ -100,6 +116,19 @@ public class PagingVO {
 	public void getCntPage(int cntPage) {
 		this.cntPage = cntPage;
 	}
+	public String getSearchType() {
+		return searchType;
+	}
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
+	public String getSearchContent() {
+		return searchContent;
+	}
+	public void setSearchContent(String searchContent) {
+		this.searchContent = searchContent;
+	}
+	
 	@Override
 	public String toString() {
 		return "PagingVO [nowPage=" + nowPage + ", startPage=" + startPage + ", endPage=" + endPage + ", total=" + total

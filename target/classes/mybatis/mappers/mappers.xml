@@ -27,9 +27,30 @@
 		<result property="lastPage"  column="" />
 		<result property="cntPage" column=""  />
 	</resultMap>
+	
+	
 	<select id="count" resultType="int">
 		SELECT COUNT(*) FROM boards
 	</select>
+	
+    <select id="searchBoardTotal" resultType="int" parameterType="map">
+		<![CDATA[
+		SELECT COUNT(*) FROM boards
+		   ]]>
+		
+		<if test="searchType == 'all'">
+		</if>
+		<if test="searchType == 't'">
+		 where title like  trim('%' || #{searchContent} || '%')
+		</if>
+		<if test="searchType == 'c'">
+		where content like trim('%' || #{searchContent} || '%')
+		</if>
+		<if test="searchType == 'n'">
+		where writer like  trim('%' || #{searchContent} || '%')
+		</if>
+	</select>
+	
 
 
 	<select id="list" resultType="boardVO" parameterType="pagingVO">
@@ -48,5 +69,23 @@
 	   INSERT INTO boards(boardNum,writer,title,content,updateD) 
 	   VALUES(#{boardSEQ},#{writer},#{title},#{content},DEFAULT );
 	</insert>
+	
+	<select id="boardDetail" resultType="boardVO" parameterType="boardVO">
+		SELECT * FROM boards WHERE boardNum = #{boardNum}
+	 </select>
+	 
+	 <update id="modBoard" parameterType="boardVO">
+	     update boards
+	     set
+	        content =#{content},
+	         writer =#{writer},
+	          title= #{title}
+	     where boardNum =#{boardNum}
+	 </update>
+	 
+	 <delete id="deleteBoard" parameterType="int">
+	     delete from boards 
+	     where boardNum =#{boardNum}
+	 </delete>
 
 </mapper>
