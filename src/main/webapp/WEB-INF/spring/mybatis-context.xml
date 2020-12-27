@@ -17,7 +17,7 @@
 		</property>
 	</bean>
 	 -->
-      <bean id="dataSource"
+     <bean id="dataSource"
         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
         <property name="url"
@@ -25,7 +25,17 @@
         </property>
         <property name="username" value="root"></property>
         <property name="password" value="tiger"></property>
-    </bean> 
+    </bean>  
+    
+    <!-- <bean id="dataSource"
+        class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+        <property name="url"
+            value="jdbc:mysql://:3306/companytest?useSSL=false&amp;serverTimezone=UTC">
+        </property>
+        <property name="username" value=""></property>
+        <property name="password" value=""></property>
+    </bean>    -->  
  
  
        <bean id="sqlSessionFactory"

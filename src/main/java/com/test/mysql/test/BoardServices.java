@@ -1,6 +1,7 @@
 package com.test.mysql.test;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,9 +24,22 @@ public class BoardServices {
 		
 	}
 	
-	public BoardVO boardDetail() {
-		return null;
+	public BoardVO boardDetail(BoardVO vo) {
+		return dao.boardDetail(vo);
 		
+	}
+	
+	public int modBoard(BoardVO vo) {
+		return dao.modBoard(vo);
+		
+	}
+	
+	public void deleteBoard(int vo) {
+		 dao.deleteBoard(vo);
+	}
+	
+	public int searchboardtotal(Map<String,String> searchParam) {
+		return dao.searchboardtotal(searchParam);
 	}
 
 }

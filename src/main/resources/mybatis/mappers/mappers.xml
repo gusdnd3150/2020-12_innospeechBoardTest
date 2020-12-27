@@ -26,11 +26,31 @@
 		<result property="cntPerPage"  column="" />
 		<result property="lastPage"  column="" />
 		<result property="cntPage" column=""  />
+		<result property="searchType" column=""  />
+		<result property="searchContent" column=""  />
 	</resultMap>
+	
+	
 	<select id="count" resultType="int">
 		SELECT COUNT(*) FROM boards
 	</select>
-
+	
+    <select id="searchBoardTotal" resultType="int" parameterType="java.util.Map">
+		SELECT COUNT(*) FROM boards
+		 <choose>
+            <when test='searchType==1 '>
+		 where title like CONCAT('%',#{searchContent},'%')
+            </when>
+            <when test='searchType==2 '>
+		where content like CONCAT('%',#{searchContent},'%')
+            </when>
+            <when test='searchType==3 '>
+		where writer like CONCAT('%',#{searchContent},'%')
+            </when>
+            <when test='searchType==10'>
+            </when>
+            </choose>
+	</select>
 
 	<select id="list" resultType="boardVO" parameterType="pagingVO">
          SELECT *
@@ -42,11 +62,50 @@
 						                    ORDER BY boardNum DESC ) b
 						                               ,(SELECT @ROWNUM := 0 ) c) d
            WHERE rowN BETWEEN  #{start} AND #{end}
+           
+           <choose>
+             <when test='searchType==1'>
+             AND title LIKE CONCAT('%',#{searchContent},'%')
+             </when>
+             <when test='searchType==2'>
+             AND content LIKE CONCAT('%',#{searchContent},'%')
+             </when>
+             <when test='searchType==3'>
+             AND writer LIKE  CONCAT('%',#{searchContent},'%')
+             </when>
+             <when test='searchType==10'>
+             </when>
+           </choose>
 	</select>
+	
+	
+	
+	
+	
 	
 	<insert id="insertBoard" parameterType="boardVo" >
 	   INSERT INTO boards(boardNum,writer,title,content,updateD) 
 	   VALUES(#{boardSEQ},#{writer},#{title},#{content},DEFAULT );
 	</insert>
+	
+	
+	
+	<select id="boardDetail" resultType="boardVO" parameterType="boardVO">
+		SELECT * FROM boards WHERE boardNum = #{boardNum}
+	 </select>
+	 
+	 <update id="modBoard" parameterType="boardVO">
+	     update boards
+	     set
+	        content =#{content},
+	         writer =#{writer},
+	          title= #{title}
+	     where boardNum =#{boardNum}
+	 </update>
+	 
+	 <delete id="deleteBoard" parameterType="int">
+	     delete from boards 
+	     where boardNum =#{boardNum}
+	 </delete>
 
 </mapper>
