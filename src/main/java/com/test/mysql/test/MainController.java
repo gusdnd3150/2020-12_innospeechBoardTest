@@ -42,27 +42,32 @@ public class MainController {
 	BoardServices services;
 
 	// 게시판 호출
-	@RequestMapping(value = "/mainBoard.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/mainBoard.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView boardList(@RequestParam Map<String, Object> info, HttpServletRequest request,
 			HttpServletResponse response) {
+		
+		logger.info("mainBoard.do");
+		logger.trace("trace");
 		ModelAndView mav = new ModelAndView();
 
 		Map<String, String> searchParam = new HashMap<String, String>();
 
-		String nowPage = (String) info.get("nowPage");
-		String cntPerPage = (String) info.get("cntPerPage");
+		String nowPage = (String) request.getParameter("nowPage");
+		String cntPerPage = (String) request.getParameter("cntPerPage");
 
 		// 검색 조건
-		String searchType = (String) info.get("searchType");
-		String searchContent = (String) info.get("searchContent");
-
+		String searchType = (String) request.getParameter("searchType");
+		String searchContent = (String) request.getParameter("searchContent");
+        
+		System.out.print(searchContent);
+		
 		nowPage = nowPage == null ? "1" : nowPage;
 		cntPerPage = cntPerPage == null ? "10" : cntPerPage;
 		searchType = searchType == null ? "10" : searchType;
 
 		searchParam.put("searchType", searchType);
 		searchParam.put("searchContent", searchContent);
-		int total = services.searchboardtotal(searchParam); // 수정중
+		int total = services.searchboardtotal(searchParam); 
 		PagingVO paging = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage),
 				Integer.parseInt(searchType), searchContent);
 		List<BoardVO> boarList = new ArrayList<BoardVO>();
@@ -158,7 +163,7 @@ public class MainController {
 		return UUID.randomUUID().toString().replaceAll("-", "");
 	}
 	
-	@ResponseBody         //상품 후기등록
+	@ResponseBody         // 
 	@RequestMapping(value = "/upload.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public String addAfter(@RequestParam Map<String,Object> info, MultipartHttpServletRequest upfile,HttpServletRequest request,HttpServletResponse response) throws Exception {
 		String resEnt = null;

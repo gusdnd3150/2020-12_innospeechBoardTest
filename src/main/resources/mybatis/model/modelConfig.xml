@@ -3,7 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-	<typeAliases>
+	<typeAliases>  
 	<typeAlias type="com.test.mysql.test.BoardVO"  alias="boardVo" />
 	<typeAlias type="com.test.mysql.test.PagingVO"  alias="pagingVO" />
 	</typeAliases>        

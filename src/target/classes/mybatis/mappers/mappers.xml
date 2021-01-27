@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="testBoard">
+
+	<resultMap id="boardVo" type="boardVo">
+		<result property="boardNum" column="BOARDNUM" />
+		<result property="writer" column="WRITER" />
+		<result property="title" column="TITLE" />
+		<result property="content" column="CONTENT" />
+		<result property="updateD" column="UPDATED" />
+		<result property="rowN" column="ROWN" />
+		<result property="boardSEQ" column="" />
+	</resultMap>
+	
+	<resultMap id="pagingVO" type="pagingVO">
+		<result property="start" column="" />
+		<result property="end" column=""  />
+		<result property="nowPage"  column="" />
+		<result property="startPage"  column="" />
+		<result property="endPage"  column="" />
+		<result property="total"  column="" />
+		<result property="cntPerPage"  column="" />
+		<result property="lastPage"  column="" />
+		<result property="cntPage" column=""  />
+		<result property="searchType" column=""  />
+		<result property="searchContent" column=""  />
+	</resultMap>
+	
+	
+	<select id="count" resultType="int">
+		SELECT COUNT(*) FROM boards
+	</select>
+	
+    <select id="searchBoardTotal" resultType="int" parameterType="java.util.Map">
+		SELECT COUNT(*) FROM boards
+		 <choose>
+            <when test='searchType==1 '>
+		 where title like CONCAT('%',#{searchContent},'%')
+            </when>
+            <when test='searchType==2 '>
+		where content like CONCAT('%',#{searchContent},'%')
+            </when>
+            <when test='searchType==3 '>
+		where writer like CONCAT('%',#{searchContent},'%')
+            </when>
+            <when test='searchType==10'>
+            </when>
+            </choose>
+	</select>
+
+	<select id="list" resultType="boardVO" parameterType="pagingVO">
+         SELECT *
+          FROM (
+                 SELECT
+                 (@rownum:=@rownum+1)AS rowN, b.*
+                        from              ( SELECT * 
+					                    	FROM BOARDs
+						                    ORDER BY boardNum DESC ) b
+						                               ,(SELECT @ROWNUM := 0 ) c) d
+           WHERE rowN BETWEEN  #{start} AND #{end}
+           
+           <choose>
+             <when test='searchType==1'>
+             AND title LIKE CONCAT('%',#{searchContent},'%')
+             </when>
+             <when test='searchType==2'>
+             AND content LIKE CONCAT('%',#{searchContent},'%')
+             </when>
+             <when test='searchType==3'>
+             AND writer LIKE  CONCAT('%',#{searchContent},'%')
+             </when>
+             <when test='searchType==10'>
+             </when>
+           </choose>
+	</select>
+	
+	
+	
+	
+	
+	
+	<insert id="insertBoard" parameterType="boardVo" >
+	   INSERT INTO boards(boardNum,writer,title,content,updateD) 
+	   VALUES(#{boardSEQ},#{writer},#{title},#{content},DEFAULT );
+	</insert>
+	
+	
+	
+	<select id="boardDetail" resultType="boardVO" parameterType="boardVO">
+		SELECT * FROM boards WHERE boardNum = #{boardNum}
+	 </select>
+	 
+	 <update id="modBoard" parameterType="boardVO">
+	     update boards
+	     set
+	        content =#{content},
+	         writer =#{writer},
+	          title= #{title}
+	     where boardNum =#{boardNum}
+	 </update>
+	 
+	 <delete id="deleteBoard" parameterType="int">
+	     delete from boards 
+	     where boardNum =#{boardNum}
+	 </delete>
+
+</mapper>

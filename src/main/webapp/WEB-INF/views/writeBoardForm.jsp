@@ -16,36 +16,6 @@ td{
 
 </style>
 
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-      <!-- 작성폼 -->
-      <div align="center" style="padding-top: 10%;padding-bottom: 10%;">
-      <h1>게시글 등록</h1>
-         <form name="writeForm"  id="formname1">
-         <table>
-           <tr>
-          <td>이름 : </td>
-          <td> <input type="text" name="writer" style="width:100%"></td>           
-           </tr>
-          <tr>
-          <td>제목 : </td>
-          <td> <input type="text" name="title" style="width:100%"></td>           
-           </tr>
-          <td></td>
-          <td><textarea id="editor1" name="content"></textarea>
-            </td>           
-           </tr>
-         
-         </table>
-         <button class="btn-info" onclick="checkForm(event)">등록</button>
-         <button onclick="back(event)">뒤로가기</button>
-         </form>
-      </div>
-
-</body>
 
 <script src="/resources/ckeditor/ckeditor.js"></script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -103,11 +73,42 @@ function checkForm(event){
 		          }
 	        }
 	    });
-
-	
 	
 }
 
 </script>
+
+
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+      <!-- 작성폼 -->
+      <div align="center" style="padding-top: 10%;padding-bottom: 10%;">
+      <h1>게시글 등록</h1>
+         <form name="writeForm"  id="formname1">
+         <table>
+           <tr>
+          <td>이름 : </td>
+          <td> <input type="text" name="writer" style="width:100%"></td>           
+           </tr>
+          <tr>
+          <td>제목 : </td>
+          <td> <input type="text" name="title" style="width:100%"></td>           
+           </tr>
+          <td></td>
+          <td><textarea id="editor1" name="content"></textarea>
+            </td>           
+           </tr>
+         
+         </table>
+         <button class="btn-info" onclick="checkForm(event)">등록</button>
+         <button onclick="back(event)">뒤로가기</button>
+         </form>
+      </div>
+
+</body>
+
 
 </html>

@@ -4,8 +4,6 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -17,53 +15,6 @@ table, th, td {
 }
 </style>
 
-
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-
-	<div class="container">
-		<div align="center" style="padding-top: 10%">
-			<form name="modifyInfo" id="modifyInfo">
-			<input type="hidden" name ="boardNum" value="${boardDetail.boardNum }">
-				<table class="table">
-					<tr>
-						<td>작성자</td>
-						<td><input type="text" name="writer" readonly="readonly"
-							value="${boardDetail.writer }" style="border: none;"></td>
-					</tr>
-					<tr>
-						<td>제목</td>
-						<td><input type="text" name="title" readonly="readonly"
-							value="${boardDetail.title }" style="border: none;"></td>
-					</tr>
-					<tr>
-						<td>작성일</td>
-						<td>${boardDetail.updateD }</td>
-					</tr>
-					<tr>
-					
-						<td colspan="2"><textarea id="modeEditor" name="content" >${boardDetail.content }</textarea></td>
-					</tr>
-				</table>
-
-			</form>
-		</div>
-
-		<!-- 버튼 위치 -->
-		<div id="button" align="center" style="padding-top: 10px;padding-bottom:10%">
-			<button onclick="back()">뒤로가기</button>
-			<button onclick="modify()">수정하기</button>
-			<button class="btn-danger" onclick="deleteBoard(${boardDetail.boardNum})">삭제</button>
-			<button class="btn-info" onclick="updateBoardVO()" style="display: none"
-				id="buttonModify">수정</button>
-		</div>
-
-	</div>
-	
-	
-</body>
 
 <script src="/resources/ckeditor/ckeditor.js"></script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -159,4 +110,53 @@ function toggleReadOnly(isReadOnly) {
 		return;
 	}
 </script>
+
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div class="container">
+		<div align="center" style="padding-top: 10%">
+			<form name="modifyInfo" id="modifyInfo">
+			<input type="hidden" name ="boardNum" value="${boardDetail.boardNum }">
+				<table class="table">
+					<tr>
+						<td>작성자</td>
+						<td><input type="text" name="writer" readonly="readonly"
+							value="${boardDetail.writer }" style="border: none;"></td>
+					</tr>
+					<tr>
+						<td>제목</td>
+						<td><input type="text" name="title" readonly="readonly"
+							value="${boardDetail.title }" style="border: none;"></td>
+					</tr>
+					<tr>
+						<td>작성일</td>
+						<td>${boardDetail.updateD }</td>
+					</tr>
+					<tr>
+					
+						<td colspan="2"><textarea id="modeEditor" name="content" >${boardDetail.content }</textarea></td>
+					</tr>
+				</table>
+
+			</form>
+		</div>
+
+		<!-- 버튼 위치 -->
+		<div id="button" align="center" style="padding-top: 10px;padding-bottom:10%">
+			<button onclick="back()">뒤로가기</button>
+			<button onclick="modify()">수정하기</button>
+			<button class="btn-danger" onclick="deleteBoard(${boardDetail.boardNum})">삭제</button>
+			<button class="btn-info" onclick="updateBoardVO()" style="display: none"
+				id="buttonModify">수정</button>
+		</div>
+
+	</div>
+	
+	
+</body>
+
+
 </html>

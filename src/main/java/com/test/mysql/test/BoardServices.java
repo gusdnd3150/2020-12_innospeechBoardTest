@@ -15,6 +15,7 @@ public class BoardServices {
 	public int boardtotal() {
 		return dao.boardtotal();
 	}
+	
 	public List<BoardVO> list(PagingVO p){
 		return dao.list(p);
 	}
